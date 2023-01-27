@@ -83,6 +83,6 @@
     "tscheck": "tsc --noEmit --skipLibCheck",
     "eslint": "eslint './src/**/*.{ts,tsx}'",
     "test": "yarn coverage && yarn eslint && yarn tscheck",
-    "semantic-release": "git push --dry-run --no-verify https://x-access-token:$GITHUB_TOKEN@github.com/oklas/ra-jsoneditor.git HEAD:main ; semantic-release"
+    "semantic-release": "semantic-release"
   }
 }
