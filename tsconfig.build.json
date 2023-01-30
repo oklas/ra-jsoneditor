@@ -3,6 +3,7 @@
   "compilerOptions": {
     "types": ["node"],
     "outDir": "./lib",
+    "sourceRoot": "./lib",
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts", "**/*.spec.tsx"]
