@@ -46,22 +46,22 @@ jobs:
           CI: true
 
       - name: Test – Eslint
-        if: ${{ always() && matrix.node-version == '12' }}
+        if: ${{ always() && matrix.node-version == '18' }}
         run: yarn eslint
 
       - name: Test – TSCheck
-        if: ${{ always() && matrix.node-version == '12' }}
+        if: ${{ always() && matrix.node-version == '18' }}
         run: yarn tscheck
 
       - name: Publish Test Report
-        if: ${{ always() && matrix.node-version == '12' }}
+        if: ${{ always() && matrix.node-version == '18' }}
         uses: mikepenz/action-junit-report@v2
         with:
           check_name: JUnit Annotations for Node ${{ matrix.node-version }}
           report_paths: '**/coverage/junit/**/*.xml'
 
       - name: Send codecov.io stats
-        if: matrix.node-version == '12'
+        if: matrix.node-version == '18'
         run: bash <(curl -s https://codecov.io/bash) || echo ''
 
   publish:
