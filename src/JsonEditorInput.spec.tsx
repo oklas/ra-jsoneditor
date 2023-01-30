@@ -1,4 +1,4 @@
-import { act, render } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import { DataProviderContext, ResourceContextProvider } from 'ra-core';
 import { Create, SimpleForm, AdminContext } from 'react-admin';
 import JsonEditorInput from './JsonEditorInput';
@@ -6,20 +6,20 @@ import JsonEditorInput from './JsonEditorInput';
 describe('<SimpleForm />', () => {
   const defaultProps = {
     resource: 'posts',
-    record: { id: 123, title: 'Lorem ipsum' },
+    record: { id: 123, json: '{"enable": false}'},
     sx: { width: 600 },
   };
 
-  it('should render jsoneditor', async () => {
+  it('should render editable jsoneditor', async () => {
     const dataProvider: any = {
       getList: () =>
         Promise.resolve({
-          data: [{ id: 1, text: 'the text', state: true }],
+          data: [{ id: 1, json: '{"enable": false}', state: true }],
           total: 2,
         }),
       update: jest.fn(() =>
         Promise.resolve({
-          data: { id: 1, state: false },
+          data: { id: 1, json: '{"enable": true}', state: false },
         } as any)
       ),
     };
@@ -34,7 +34,7 @@ describe('<SimpleForm />', () => {
             <DataProviderContext.Provider value={dataProvider}>
               <Create {...defaultProps}>
                 <SimpleForm>
-                  <JsonEditorInput source="state" />
+                  <JsonEditorInput source="json" />
                 </SimpleForm>
               </Create>
             </DataProviderContext.Provider>
@@ -47,5 +47,15 @@ describe('<SimpleForm />', () => {
     expect(first).not.toBeNull();
     const menu = first.querySelector('.jsoneditor-menu') as HTMLInputElement;
     expect(menu).not.toBeNull();
+
+    const input = first.querySelector('input[type=checkbox]') as HTMLInputElement;
+    expect(input.checked).toBe(false);
+
+    await act(async () => {
+      fireEvent.click(input);
+    });
+    expect(input.checked).toBe(true);
+
+    // TODO: jsoneditor does not fires onChange in test
   });
 });

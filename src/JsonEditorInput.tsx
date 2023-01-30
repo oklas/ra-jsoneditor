@@ -5,9 +5,8 @@ import 'jsoneditor-react/es/editor.min.css';
 const JsonEditorInput: React.FC<TextInputProps> = (
   props: TextInputProps
 ): React.ReactElement<any, any> | null => {
-  const { onChange } = props;
   const {
-    field: { value },
+    field: { value, onChange },
   } = useInput(props);
   return (
     <JsonEditor
