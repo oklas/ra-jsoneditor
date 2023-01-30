@@ -6,7 +6,7 @@ import JsonEditorInput from './JsonEditorInput';
 describe('<SimpleForm />', () => {
   const defaultProps = {
     resource: 'posts',
-    record: { id: 123, json: '{"enable": false}'},
+    record: { id: 123, json: '{"enable": false}' },
     sx: { width: 600 },
   };
 
